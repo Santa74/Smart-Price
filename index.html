@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart price prediction</title>
+    <title>Smart Price Prediction</title>
     <style>
         :root {
             --primary-color: #4a6bff;
@@ -21,35 +21,28 @@
             background: linear-gradient(135deg, #f5f7ff 0%, #e8ecff 100%);
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
-            line-height: 1.6;
+            padding: 15px;
+            line-height: 1.5;
             min-height: 100vh;
         }
         
         .container {
-            max-width: 800px;
-            margin: 20px auto;
+            max-width: 600px;
+            margin: 15px auto;
             background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s ease;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0,0,0,0.1);
-        }
-        
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
         
         h1 {
             color: var(--primary-color);
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
             position: relative;
-            padding-bottom: 15px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            padding-bottom: 10px;
         }
         
         h1::after {
@@ -58,43 +51,38 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
+            width: 80px;
+            height: 3px;
             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
             border-radius: 3px;
         }
         
         .form-group {
-            margin-bottom: 25px;
-            animation: fadeIn 0.6s ease forwards;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-bottom: 15px;
         }
         
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: var(--primary-color);
-            font-size: 1.05rem;
+            font-size: 0.95rem;
         }
         
         input, select {
             width: 100%;
-            padding: 14px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
             background-color: #f9f9f9;
+            box-sizing: border-box;
         }
         
         input:focus, select:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(74, 107, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.15);
             outline: none;
             background-color: white;
         }
@@ -105,82 +93,9 @@
         
         .error-message {
             color: var(--error-color);
-            font-size: 14px;
-            margin-top: 5px;
+            font-size: 12px;
+            margin-top: 4px;
             display: none;
-        }
-        
-        .result {
-            background-color: var(--secondary-color);
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 35px;
-            border-left: 6px solid var(--accent-color);
-            display: none;
-            animation: slideUp 0.6s ease;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-        }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .profit-price {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--dark-accent);
-            margin-top: 15px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-            animation: pulse 1.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
-        
-        button {
-            background: linear-gradient(135deg, var(--primary-color), #3a5bef);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 17px;
-            font-weight: bold;
-            display: block;
-            margin: 35px auto 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(74, 107, 255, 0.5);
-        }
-        
-        button:active {
-            transform: translateY(1px);
-        }
-        
-        button::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255,255,255,0.1);
-            transform: rotate(45deg);
-            transition: all 0.3s ease;
-        }
-        
-        button:hover::after {
-            left: 100%;
         }
         
         .input-group {
@@ -189,31 +104,67 @@
         
         .input-group span {
             position: absolute;
-            right: 15px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             background-color: #e0e0e0;
-            padding: 0 12px;
-            border-radius: 6px;
-            font-size: 14px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
             color: var(--light-text);
             font-weight: 500;
         }
         
         .input-group input, .input-group select {
-            padding-right: 60px;
+            padding-right: 50px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--primary-color), #3a5bef);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            display: block;
+            width: 100%;
+            margin: 25px auto 0;
+            transition: all 0.2s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(74, 107, 255, 0.3);
+        }
+        
+        .result {
+            background-color: var(--secondary-color);
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 4px solid var(--accent-color);
+            display: none;
+        }
+        
+        .profit-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--dark-accent);
+            margin-top: 10px;
         }
         
         .price-details {
-            margin-top: 20px;
-            padding: 15px;
+            margin-top: 15px;
+            padding: 12px;
             background-color: rgba(255,255,255,0.7);
-            border-radius: 8px;
-            border-left: 3px solid var(--highlight-color);
+            border-radius: 6px;
+            font-size: 14px;
         }
         
         .price-details p {
-            margin: 8px 0;
+            margin: 6px 0;
             display: flex;
             justify-content: space-between;
         }
@@ -223,60 +174,61 @@
             color: var(--primary-color);
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 480px) {
             .container {
-                padding: 20px;
+                padding: 15px;
             }
             
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
             
             input, select, button {
-                padding: 12px 15px;
+                padding: 8px 10px;
+                font-size: 13px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Smart price prediction</h1>
+        <h1>Product Price Calculator</h1>
         
         <form id="priceForm">
             <div class="form-group">
                 <label for="rawMaterials">Raw Materials Cost:</label>
                 <div class="input-group">
-                    <input type="number" id="rawMaterials" placeholder="Enter raw materials cost" step="0.01" required>
+                    <input type="number" id="rawMaterials" placeholder="Enter cost" step="0.01" required>
                     <span>EGP</span>
                 </div>
-                <div class="error-message" id="rawMaterialsError">Please enter raw materials cost</div>
+                <div class="error-message" id="rawMaterialsError">Required field</div>
             </div>
             
             <div class="form-group">
-                <label for="manufacturingTime">Manufacturing Time (hours):</label>
+                <label for="manufacturingTime">Manufacturing Time:</label>
                 <div class="input-group">
-                    <input type="number" id="manufacturingTime" placeholder="Enter manufacturing time" required>
+                    <input type="number" id="manufacturingTime" placeholder="Enter hours" required>
                     <span>hours</span>
                 </div>
-                <div class="error-message" id="manufacturingTimeError">Please enter manufacturing time</div>
+                <div class="error-message" id="manufacturingTimeError">Required field</div>
             </div>
             
             <div class="form-group">
                 <label for="packaging">Packaging Price:</label>
                 <div class="input-group">
-                    <input type="number" id="packaging" placeholder="Enter packaging price" step="0.01" required>
+                    <input type="number" id="packaging" placeholder="Enter price" step="0.01" required>
                     <span>EGP</span>
                 </div>
-                <div class="error-message" id="packagingError">Please enter packaging price</div>
+                <div class="error-message" id="packagingError">Required field</div>
             </div>
             
             <div class="form-group">
                 <label for="shipping">Shipping Price:</label>
                 <div class="input-group">
-                    <input type="number" id="shipping" placeholder="Enter shipping price" step="0.01" required>
+                    <input type="number" id="shipping" placeholder="Enter price" step="0.01" required>
                     <span>EGP</span>
                 </div>
-                <div class="error-message" id="shippingError">Please enter shipping price</div>
+                <div class="error-message" id="shippingError">Required field</div>
             </div>
             
             <div class="form-group">
@@ -315,24 +267,24 @@
             </div>
             
             <div class="form-group">
-                <label for="experience">Craftsman Experience (years):</label>
+                <label for="experience">Craftsman Experience:</label>
                 <div class="input-group">
-                    <input type="number" id="experience" placeholder="Enter years of experience" required>
+                    <input type="number" id="experience" placeholder="Enter years" required>
                     <span>years</span>
                 </div>
-                <div class="error-message" id="experienceError">Please enter years of experience</div>
+                <div class="error-message" id="experienceError">Required field</div>
             </div>
             
-            <button type="button" onclick="validateForm()">Calculate Final Price</button>
+            <button type="button" onclick="validateForm()">Calculate Price</button>
             
             <div class="result" id="result">
-                <h2>Pricing Result:</h2>
+                <h3>Pricing Result:</h3>
                 <p>Final Product Price:</p>
                 <div class="profit-price" id="profitPrice">0.00 EGP</div>
                 
                 <div class="price-details" id="priceDetails">
                     <p>Base Costs: <span class="value" id="baseCost">0.00 EGP</span></p>
-                    <p>Manufacturing Cost: <span class="value" id="manufacturingCost">0.00 EGP</span></p>
+                    <p>Manufacturing: <span class="value" id="manufacturingCost">0.00 EGP</span></p>
                     <p>Experience Bonus: <span class="value" id="experienceBonus">0.00 EGP</span></p>
                     <p>Governorate: <span class="value" id="selectedGovernorate">-</span></p>
                 </div>
@@ -344,7 +296,6 @@
         function validateForm() {
             let isValid = true;
             
-            // Validate all required fields
             const requiredFields = [
                 'rawMaterials', 'manufacturingTime', 'packaging', 
                 'shipping', 'governorate', 'experience'
@@ -366,19 +317,10 @@
             
             if (isValid) {
                 calculatePrice();
-            } else {
-                // Scroll to first error
-                const firstError = document.querySelector('.error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
             }
-            
-            return isValid;
         }
         
         function calculatePrice() {
-            // Get input values
             const rawMaterials = parseFloat(document.getElementById('rawMaterials').value) || 0;
             const manufacturingTime = parseFloat(document.getElementById('manufacturingTime').value) || 0;
             const packaging = parseFloat(document.getElementById('packaging').value) || 0;
@@ -386,39 +328,20 @@
             const experience = parseFloat(document.getElementById('experience').value) || 0;
             const governorate = document.getElementById('governorate').value;
             
-            // Calculate base costs
             const baseCost = rawMaterials + packaging + shipping;
-            
-            // Calculate time cost (random between 10-15 EGP per hour)
-            const hourlyRate = 10 + Math.random() * 5; // Random rate between 10-15
+            const hourlyRate = 10 + Math.random() * 5;
             const timeCost = manufacturingTime * hourlyRate;
-            
-            // Calculate experience bonus (years * 7.5 EGP)
             const experienceBonus = experience * 7.5;
-            
-            // Calculate final price with 20% profit margin
             const finalPrice = (baseCost + timeCost + experienceBonus) * 1.2;
             
-            // Display result
             document.getElementById('profitPrice').textContent = finalPrice.toFixed(2) + ' EGP';
             document.getElementById('baseCost').textContent = baseCost.toFixed(2) + ' EGP';
-            document.getElementById('manufacturingCost').textContent = timeCost.toFixed(2) + ' EGP (' + hourlyRate.toFixed(2) + ' EGP/hour)';
+            document.getElementById('manufacturingCost').textContent = timeCost.toFixed(2) + ' EGP';
             document.getElementById('experienceBonus').textContent = '+' + experienceBonus.toFixed(2) + ' EGP';
             document.getElementById('selectedGovernorate').textContent = governorate;
             document.getElementById('result').style.display = 'block';
-            document.getElementById('priceDetails').style.display = 'block';
-            
-            // Animation effect
-            document.getElementById('result').style.animation = 'none';
-            setTimeout(() => {
-                document.getElementById('result').style.animation = 'slideUp 0.6s ease';
-            }, 10);
-            
-            // Scroll to result
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
         
-        // Add input validation on blur
         document.querySelectorAll('input, select').forEach(element => {
             element.addEventListener('blur', function() {
                 if (this.required && !this.value) {
