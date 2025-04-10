@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Pricing Model</title>
+    <title>Smart Pricing Calculator</title>
     <style>
         :root {
             --primary-color: #4a6bff;
@@ -11,40 +11,46 @@
             --accent-color: #ff7e5f;
             --text-color: #333;
             --light-text: #6c757d;
+            --highlight-color: #ffcc00;
+            --dark-accent: #e64a19;
         }
-
+        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f7ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e8ecff 100%);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
             line-height: 1.6;
+            min-height: 100vh;
         }
-
+        
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             background-color: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.1);
         }
-
+        
         .container:hover {
             transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
-
+        
         h1 {
             color: var(--primary-color);
             text-align: center;
             margin-bottom: 30px;
-            font-size: 28px;
+            font-size: 2.2rem;
             position: relative;
             padding-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
-
+        
         h1::after {
             content: '';
             position: absolute;
@@ -52,114 +58,178 @@
             left: 50%;
             transform: translateX(-50%);
             width: 100px;
-            height: 3px;
-            background: var(--accent-color);
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
             border-radius: 3px;
         }
-
+        
         .form-group {
-            margin-bottom: 20px;
-            animation: fadeIn 0.5s ease forwards;
+            margin-bottom: 25px;
+            animation: fadeIn 0.6s ease forwards;
         }
-
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+            margin-bottom: 10px;
+            font-weight: 600;
             color: var(--primary-color);
+            font-size: 1.05rem;
         }
-
+        
         input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 20px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
-            transition: border 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
         }
-
+        
         input:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+            box-shadow: 0 0 0 4px rgba(74, 107, 255, 0.15);
             outline: none;
+            background-color: white;
         }
-
+        
         .result {
             background-color: var(--secondary-color);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            border-left: 5px solid var(--accent-color);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 35px;
+            border-left: 6px solid var(--accent-color);
             display: none;
-            animation: slideUp 0.5s ease;
+            animation: slideUp 0.6s ease;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
-
+        
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        
         .profit-price {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            color: var(--accent-color);
-            margin-top: 10px;
+            color: var(--dark-accent);
+            margin-top: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            animation: pulse 1.5s infinite;
         }
-
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
         button {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), #3a5bef);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 15px 30px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
             display: block;
-            margin: 30px auto 0;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(74, 107, 255, 0.3);
+            margin: 35px auto 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.4);
+            position: relative;
+            overflow: hidden;
         }
-
+        
         button:hover {
-            background-color: #3a5bef;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 107, 255, 0.5);
         }
-
+        
         button:active {
-            transform: translateY(0);
+            transform: translateY(1px);
         }
-
+        
+        button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+        }
+        
+        button:hover::after {
+            left: 100%;
+        }
+        
         .input-group {
             position: relative;
         }
-
+        
         .input-group span {
             position: absolute;
-            right: 10px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             background-color: #e0e0e0;
-            padding: 0 10px;
-            border-radius: 5px;
+            padding: 0 12px;
+            border-radius: 6px;
             font-size: 14px;
             color: var(--light-text);
+            font-weight: 500;
         }
-
+        
         .input-group input {
-            padding-right: 50px;
+            padding-right: 60px;
+        }
+        
+        .price-details {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 8px;
+            border-left: 3px solid var(--highlight-color);
+        }
+        
+        .price-details p {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .price-details span.value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            input, button {
+                padding: 12px 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Product Price Prediction</h1>
-
+        <h1>Product Price Calculator</h1>
+        
         <div class="form-group">
             <label for="rawMaterials">Raw Materials Cost:</label>
             <div class="input-group">
@@ -167,7 +237,7 @@
                 <span>EGP</span>
             </div>
         </div>
-
+        
         <div class="form-group">
             <label for="manufacturingTime">Manufacturing Time (hours):</label>
             <div class="input-group">
@@ -175,7 +245,7 @@
                 <span>hours</span>
             </div>
         </div>
-
+        
         <div class="form-group">
             <label for="packaging">Packaging Price:</label>
             <div class="input-group">
@@ -183,7 +253,7 @@
                 <span>EGP</span>
             </div>
         </div>
-
+        
         <div class="form-group">
             <label for="shipping">Shipping Price:</label>
             <div class="input-group">
@@ -191,7 +261,7 @@
                 <span>EGP</span>
             </div>
         </div>
-
+        
         <div class="form-group">
             <label for="experience">Craftsman Experience (years):</label>
             <div class="input-group">
@@ -199,32 +269,56 @@
                 <span>years</span>
             </div>
         </div>
-
+        
         <button onclick="calculatePrice()">Calculate Final Price</button>
-
+        
         <div class="result" id="result">
-            <h2>Smart Pricing Result:</h2>
+            <h2>Pricing Result:</h2>
             <p>Final Product Price:</p>
             <div class="profit-price" id="profitPrice">0.00 EGP</div>
+            
+            <div class="price-details" id="priceDetails">
+                <p>Base Costs: <span class="value" id="baseCost">0.00 EGP</span></p>
+                <p>Manufacturing Cost: <span class="value" id="manufacturingCost">0.00 EGP</span></p>
+                <p>Experience Bonus: <span class="value" id="experienceBonus">0.00 EGP</span></p>
+            </div>
         </div>
     </div>
 
     <script>
         function calculatePrice() {
+            // Get input values
             const rawMaterials = parseFloat(document.getElementById('rawMaterials').value) || 0;
             const manufacturingTime = parseFloat(document.getElementById('manufacturingTime').value) || 0;
             const packaging = parseFloat(document.getElementById('packaging').value) || 0;
             const shipping = parseFloat(document.getElementById('shipping').value) || 0;
             const experience = parseFloat(document.getElementById('experience').value) || 0;
+            
+            // Calculate base costs
             const baseCost = rawMaterials + packaging + shipping;
-            const timeCost = manufacturingTime * 30;
-            const experienceDiscount = baseCost * (experience * 0.01);
-            const finalPrice = (baseCost + timeCost - experienceDiscount) * 1.2;
+            
+            // Calculate time cost (random between 10-15 EGP per hour)
+            const hourlyRate = 10 + Math.random() * 5; // Random rate between 10-15
+            const timeCost = manufacturingTime * hourlyRate;
+            
+            // Calculate experience bonus (years * 7.5 EGP)
+            const experienceBonus = experience * 7.5;
+            
+            // Calculate final price with 20% profit margin
+            const finalPrice = (baseCost + timeCost + experienceBonus) * 1.2;
+            
+            // Display result
             document.getElementById('profitPrice').textContent = finalPrice.toFixed(2) + ' EGP';
+            document.getElementById('baseCost').textContent = baseCost.toFixed(2) + ' EGP';
+            document.getElementById('manufacturingCost').textContent = timeCost.toFixed(2) + ' EGP (' + hourlyRate.toFixed(2) + ' EGP/hour)';
+            document.getElementById('experienceBonus').textContent = '+' + experienceBonus.toFixed(2) + ' EGP';
             document.getElementById('result').style.display = 'block';
+            document.getElementById('priceDetails').style.display = 'block';
+            
+            // Animation effect
             document.getElementById('result').style.animation = 'none';
             setTimeout(() => {
-                document.getElementById('result').style.animation = 'slideUp 0.5s ease';
+                document.getElementById('result').style.animation = 'slideUp 0.6s ease';
             }, 10);
         }
     </script>
