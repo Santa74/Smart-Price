@@ -13,6 +13,7 @@
             --light-text: #6c757d;
             --highlight-color: #ffcc00;
             --dark-accent: #e64a19;
+            --error-color: #ff4444;
         }
         
         body {
@@ -81,7 +82,7 @@
             font-size: 1.05rem;
         }
         
-        input {
+        input, select {
             width: 100%;
             padding: 14px 20px;
             border: 2px solid #e0e0e0;
@@ -91,11 +92,22 @@
             background-color: #f9f9f9;
         }
         
-        input:focus {
+        input:focus, select:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 4px rgba(74, 107, 255, 0.15);
             outline: none;
             background-color: white;
+        }
+        
+        input.error, select.error {
+            border-color: var(--error-color);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
         }
         
         .result {
@@ -188,7 +200,7 @@
             font-weight: 500;
         }
         
-        .input-group input {
+        .input-group input, .input-group select {
             padding-right: 60px;
         }
         
@@ -220,7 +232,7 @@
                 font-size: 1.8rem;
             }
             
-            input, button {
+            input, select, button {
                 padding: 12px 15px;
             }
         }
@@ -230,62 +242,141 @@
     <div class="container">
         <h1>Smart price prediction</h1>
         
-        <div class="form-group">
-            <label for="rawMaterials">Raw Materials Cost:</label>
-            <div class="input-group">
-                <input type="number" id="rawMaterials" placeholder="Enter raw materials cost" step="0.01">
-                <span>EGP</span>
+        <form id="priceForm">
+            <div class="form-group">
+                <label for="rawMaterials">Raw Materials Cost:</label>
+                <div class="input-group">
+                    <input type="number" id="rawMaterials" placeholder="Enter raw materials cost" step="0.01" required>
+                    <span>EGP</span>
+                </div>
+                <div class="error-message" id="rawMaterialsError">Please enter raw materials cost</div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            <label for="manufacturingTime">Manufacturing Time (hours):</label>
-            <div class="input-group">
-                <input type="number" id="manufacturingTime" placeholder="Enter manufacturing time">
-                <span>hours</span>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label for="packaging">Packaging Price:</label>
-            <div class="input-group">
-                <input type="number" id="packaging" placeholder="Enter packaging price" step="0.01">
-                <span>EGP</span>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label for="shipping">Shipping Price:</label>
-            <div class="input-group">
-                <input type="number" id="shipping" placeholder="Enter shipping price" step="0.01">
-                <span>EGP</span>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label for="experience">Craftsman Experience (years):</label>
-            <div class="input-group">
-                <input type="number" id="experience" placeholder="Enter years of experience">
-                <span>years</span>
-            </div>
-        </div>
-        
-        <button onclick="calculatePrice()">Calculate Final Price</button>
-        
-        <div class="result" id="result">
-            <h2>Pricing Result:</h2>
-            <p>Final Product Price:</p>
-            <div class="profit-price" id="profitPrice">0.00 EGP</div>
             
-            <div class="price-details" id="priceDetails">
-                <p>Base Costs: <span class="value" id="baseCost">0.00 EGP</span></p>
-                <p>Manufacturing Cost: <span class="value" id="manufacturingCost">0.00 EGP</span></p>
-                <p>Experience Bonus: <span class="value" id="experienceBonus">0.00 EGP</span></p>
+            <div class="form-group">
+                <label for="manufacturingTime">Manufacturing Time (hours):</label>
+                <div class="input-group">
+                    <input type="number" id="manufacturingTime" placeholder="Enter manufacturing time" required>
+                    <span>hours</span>
+                </div>
+                <div class="error-message" id="manufacturingTimeError">Please enter manufacturing time</div>
             </div>
-        </div>
+            
+            <div class="form-group">
+                <label for="packaging">Packaging Price:</label>
+                <div class="input-group">
+                    <input type="number" id="packaging" placeholder="Enter packaging price" step="0.01" required>
+                    <span>EGP</span>
+                </div>
+                <div class="error-message" id="packagingError">Please enter packaging price</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="shipping">Shipping Price:</label>
+                <div class="input-group">
+                    <input type="number" id="shipping" placeholder="Enter shipping price" step="0.01" required>
+                    <span>EGP</span>
+                </div>
+                <div class="error-message" id="shippingError">Please enter shipping price</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="governorate">Governorate:</label>
+                <select id="governorate" required>
+                    <option value="">Select Governorate</option>
+                    <option value="Cairo">Cairo</option>
+                    <option value="Alexandria">Alexandria</option>
+                    <option value="Giza">Giza</option>
+                    <option value="Dakahlia">Dakahlia</option>
+                    <option value="Sharqia">Sharqia</option>
+                    <option value="Qalyubia">Qalyubia</option>
+                    <option value="Beheira">Beheira</option>
+                    <option value="Gharbia">Gharbia</option>
+                    <option value="Monufia">Monufia</option>
+                    <option value="Minya">Minya</option>
+                    <option value="Asyut">Asyut</option>
+                    <option value="Sohag">Sohag</option>
+                    <option value="Qena">Qena</option>
+                    <option value="Aswan">Aswan</option>
+                    <option value="Luxor">Luxor</option>
+                    <option value="Red Sea">Red Sea</option>
+                    <option value="New Valley">New Valley</option>
+                    <option value="Matrouh">Matrouh</option>
+                    <option value="North Sinai">North Sinai</option>
+                    <option value="South Sinai">South Sinai</option>
+                    <option value="Port Said">Port Said</option>
+                    <option value="Suez">Suez</option>
+                    <option value="Ismailia">Ismailia</option>
+                    <option value="Damietta">Damietta</option>
+                    <option value="Kafr El Sheikh">Kafr El Sheikh</option>
+                    <option value="Beni Suef">Beni Suef</option>
+                    <option value="Faiyum">Faiyum</option>
+                </select>
+                <div class="error-message" id="governorateError">Please select a governorate</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="experience">Craftsman Experience (years):</label>
+                <div class="input-group">
+                    <input type="number" id="experience" placeholder="Enter years of experience" required>
+                    <span>years</span>
+                </div>
+                <div class="error-message" id="experienceError">Please enter years of experience</div>
+            </div>
+            
+            <button type="button" onclick="validateForm()">Calculate Final Price</button>
+            
+            <div class="result" id="result">
+                <h2>Pricing Result:</h2>
+                <p>Final Product Price:</p>
+                <div class="profit-price" id="profitPrice">0.00 EGP</div>
+                
+                <div class="price-details" id="priceDetails">
+                    <p>Base Costs: <span class="value" id="baseCost">0.00 EGP</span></p>
+                    <p>Manufacturing Cost: <span class="value" id="manufacturingCost">0.00 EGP</span></p>
+                    <p>Experience Bonus: <span class="value" id="experienceBonus">0.00 EGP</span></p>
+                    <p>Governorate: <span class="value" id="selectedGovernorate">-</span></p>
+                </div>
+            </div>
+        </form>
     </div>
 
     <script>
+        function validateForm() {
+            let isValid = true;
+            
+            // Validate all required fields
+            const requiredFields = [
+                'rawMaterials', 'manufacturingTime', 'packaging', 
+                'shipping', 'governorate', 'experience'
+            ];
+            
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field);
+                const errorElement = document.getElementById(field + 'Error');
+                
+                if (!element.value) {
+                    element.classList.add('error');
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    element.classList.remove('error');
+                    errorElement.style.display = 'none';
+                }
+            });
+            
+            if (isValid) {
+                calculatePrice();
+            } else {
+                // Scroll to first error
+                const firstError = document.querySelector('.error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+            
+            return isValid;
+        }
+        
         function calculatePrice() {
             // Get input values
             const rawMaterials = parseFloat(document.getElementById('rawMaterials').value) || 0;
@@ -293,6 +384,7 @@
             const packaging = parseFloat(document.getElementById('packaging').value) || 0;
             const shipping = parseFloat(document.getElementById('shipping').value) || 0;
             const experience = parseFloat(document.getElementById('experience').value) || 0;
+            const governorate = document.getElementById('governorate').value;
             
             // Calculate base costs
             const baseCost = rawMaterials + packaging + shipping;
@@ -312,6 +404,7 @@
             document.getElementById('baseCost').textContent = baseCost.toFixed(2) + ' EGP';
             document.getElementById('manufacturingCost').textContent = timeCost.toFixed(2) + ' EGP (' + hourlyRate.toFixed(2) + ' EGP/hour)';
             document.getElementById('experienceBonus').textContent = '+' + experienceBonus.toFixed(2) + ' EGP';
+            document.getElementById('selectedGovernorate').textContent = governorate;
             document.getElementById('result').style.display = 'block';
             document.getElementById('priceDetails').style.display = 'block';
             
@@ -320,7 +413,23 @@
             setTimeout(() => {
                 document.getElementById('result').style.animation = 'slideUp 0.6s ease';
             }, 10);
+            
+            // Scroll to result
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
+        
+        // Add input validation on blur
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('blur', function() {
+                if (this.required && !this.value) {
+                    this.classList.add('error');
+                    document.getElementById(this.id + 'Error').style.display = 'block';
+                } else {
+                    this.classList.remove('error');
+                    document.getElementById(this.id + 'Error').style.display = 'none';
+                }
+            });
+        });
     </script>
 </body>
 </html>
