@@ -1,8 +1,7 @@
-
 :root {
-    --primary-color: #4a6bff;
+    --primary-color: #98ff98; /* Mintgreen */
     --secondary-color: #f8f9fa;
-    --accent-color: #ff7e5f;
+    --accent-color: #20c997; /* A rich green accent */
     --text-color: #333;
     --light-text: #6c757d;
 }
@@ -68,7 +67,7 @@ label {
     color: var(--primary-color);
 }
 
-input {
+input, select {
     width: 100%;
     padding: 12px 15px;
     border: 2px solid #e0e0e0;
@@ -77,9 +76,9 @@ input {
     transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
-input:focus {
+input:focus, select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(152, 255, 152, 0.3);
     outline: none;
 }
 
@@ -117,11 +116,11 @@ button {
     display: block;
     margin: 30px auto 0;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(74, 107, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(152, 255, 152, 0.4);
 }
 
 button:hover {
-    background-color: #3a5bef;
+    background-color: #7be67b;
     transform: translateY(-2px);
 }
 
@@ -147,4 +146,19 @@ button:active {
 
 .input-group input {
     padding-right: 50px;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    display: none;
+    margin-top: 5px;
+}
+
+.price-details {
+    margin-top: 15px;
+}
+
+.price-details .value {
+    font-weight: bold;
 }
